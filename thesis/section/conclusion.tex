@@ -1,0 +1,36 @@
+This chapter summarizes the work done in this project. 
+It reviews if the goals were achieved, presents the main areas of future work, and provides final reflections.
+\section{Goals Achieved}
+    The project met all the set goals.
+    It was empirically proven that the project is feasible at its scope.
+    Support for IoT data ingestion was provided through IoT Gateway and extending Hopsworks. Security was ensured by the use of the \ac{HTTPS} and \ac{RPK} protocols. 
+    On top of that, the gateways were authenticated using \ac{JWT}.
+    Besides, the \texttt{hops-util} library was extended to provide tools for the exclusion of misbehaving devices and blocking traffic from sources of \ac{DDoS} attack.
+     Sample streaming jobs were provided to test the added functionality.
+     Moreover, multiple tests were run to prove the reliability of the system and the ability to recover from potentially harmful situations like a power outage, unexpected reboot of the machines, and others. 
+     The system demonstrated its resilience and capability to return after a collapse of any of the elements.
+     In addition, the IoT Gateway was tested against bigger traffic on a scale that the test machines were able to simulate.
+     It was shown that the gateway can deliver data fast enough and in a reliable manner.
+     The gateway generally performed very well, however, some parts, like the DatabaseService, can be optimized thus making the gateway work faster under heavy traffic.
+     Lastly, examples of streaming analytics jobs were presented to visualize the measurements.
+     The data was correctly retrieved from storage, processed and shown in a graphical form.
+\section{Future Work}
+    The scope of the project was limited because of time constraints.
+    To meet both the project requirements and deadlines some simplification were introduced. 
+    The following elements are expected to be further developed to make sure the system is production-ready:
+        \begin{itemize}
+        \item The \ac{OMA LwM2M} protocol was implemented only in terms of two types of messages - temperature and presence. It is advised to implement the rest of the \ac{IPSO} objects to make the IoT Gateway fully compliant with the protocol.
+        \item Currently, the IoT Nodes are provided with the hostname and port of the IoT Gateway. To make the system truly scalable, a bootstrap server needs to be introduced. It would contain the list of active IoT Gateways and would redirect the nodes to the optimal one. In other words, the bootstrap server would server the role of a load balancer. This would also ease the usage of hostnames instead of IP addresses which would make the system much more flexible. In this case, the gateways would perform a DNS lookup.
+        \item Extracting gateways as a separate resource not bounded to a single project would highly extend flexibility and ease the analysis of the data. Currently, the gateways are a subresource of a project and only the stored datasets can be shared between projects.
+        \item The Hops Kafka Authorizer currently supports access based on the IP address. In the case of a \ac{NAT}, it creates a conflict between the gateways. Blocking one gateway would potentially block a whole range of gateways. Adding authorization based on the port would mitigate the problem.
+        \item The work done in this project provides tools for the automatic exclusion of the devices and/or gateways. The next step would be to develop a real \ac{ML} model that could protect the Hops platform against \ac{DDoS} attacks.
+        \item Another approach to data ingestion would be to make the IoT Nodes push the data directly to a Kafka broker. It would require a complete redesign of the system but could potentially enable end-to-end \ac{PKI} security. This design would also require the deployment of Kafka brokers not only in the main data center but also in the field introducing new challenges.
+    \end{itemize}
+\section{Reflections}
+It was shown that the IoT Gateway and Hopsworks IoT extension work as expected.
+We were able to connect real IoT devices and stream the data to the cloud in a secure, performant, and reliable manner.
+The gateway was designed with a flexible architecture so, by replacing \texttt{LeshanService}, the system can be extended to other IoT protocols, such as MQTT.
+The code developed in this thesis is fully open-source and free to use and distribute under the GNU v3.0 license.
+It was not, however, tested in a production environment. 
+The system would be required to go through an exhaustive quality assurance phase before being installed with a real-life IoT network.
+We hope that the work conducted in this thesis will be the subject of further research and development in a production environment and that the extended Hops platform will open new possibilities of data analysis to researchers, companies, and organizations.

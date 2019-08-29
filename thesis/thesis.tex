@@ -1,0 +1,126 @@
+\documentclass[11pt, a4paper, oneside]{report}
+\usepackage{acronym}
+\usepackage[hidelinks]{hyperref}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+\usepackage[style=numeric,sorting=none,backend=biber, doi=false, isbn=false,eprint=false]{biblatex}
+\addbibresource{bibl.bib}
+\usepackage[english]{babel}
+%%page layout
+\usepackage[a4paper, left=30mm, right=30mm, top=25mm, bottom=25mm,includehead,includefoot,heightrounded]{geometry}
+
+% text formatting
+\usepackage{ragged2e}
+\usepackage{setspace}
+\righthyphenmin=62
+\lefthyphenmin=62
+
+%include pdf with title page
+\usepackage{pdfpages}
+
+%use arial font
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+%header
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+
+\fancyhead{}
+\fancyhead[L]{\includegraphics[scale=0.45]{UPM_logo.png}}
+\fancyhead[R]{\includegraphics[scale=1]{UPM_logo1.png}}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{plain}{%
+    \fancyhf{} % clear all header and footer fields
+    \fancyhead[L]{\includegraphics[scale=0.05]{upm_logo.png}}
+    \fancyhead[R]{\includegraphics[scale=0.65]{etsist_logo.jpg}}
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\footrulewidth}{0pt}
+}
+\fancypagestyle{infotext}{%
+    \fancyhf{}
+}
+
+% Set the proper format for the headers
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\large\bfseries}
+  {\thesubsection}{1em}{}
+  
+\title{{\LARGE UNIVERSIDAD POLITÉCNICA\\ DE MADRID}\\
+\vskip 5mm
+{\large \textbf{ESCUELA TÉCNICA SUPERIOR DE INGENERÍA\\
+Y SYSTEMAS DE TELECOMUNICACIÓN}}\\
+\vskip 5mm
+{\large MSc in Systems and Services Engineering for the Information Society}\\
+\vskip 10mm
+{\includegraphics[]{upm_only_logo.png}}\\
+\vskip 5mm
+{\textbf{Dataflow Specification of a K-Means Clustering Algorithm}}\\
+\vskip 10mm
+{Master Thesis}}
+\author{Marta Rodríguez Ramos}
+\vskip 40mm
+\date{Madrid, October 2019}
+
+\pagestyle{plain}
+
+\linespread{1.05}
+
+%\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+%\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+%%
+\begin{document}
+\includepdf[pages=-]{first_page.pdf}
+\sloppy
+\maketitle\thispagestyle{empty}
+\newgeometry{left=30mm, right=30mm, top=25mm, bottom=25mm,includehead,includefoot,heightrounded, headheight=54pt}
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\listoftables
+\chapter*{List of Acronyms}
+	\input{section/acro_list}
+\onehalfspacing
+\righthyphenmin=62
+\lefthyphenmin=62
+\justify
+\chapter*{Summary}
+	\input{section/summary}
+\chapter*{Resumen}
+	\input{section/resumen}
+\chapter*{Acknowledgments}
+	\input{section/acknowledgments}
+\chapter{Introduction}
+\pagenumbering{arabic}
+	\input{section/introduction}
+\chapter{Background}
+	\label{sec:background}
+	\input{section/background}
+\chapter{Implementation}
+	\label{sec:implementation}
+	\input{section/implementation}
+\chapter{Results}
+	\label{sec:results}
+	\input{section/results}
+\chapter{Conclusion}
+	\label{sec:conclusion}
+	\input{section/conclusion}
+
+\printbibliography
+%\bibliographystyle{plain}
+%\bibliography{bibl}
+\end{document}

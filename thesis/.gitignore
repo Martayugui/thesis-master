@@ -1,0 +1,16 @@
+*.log
+*.xml
+*.aux
+*.acn
+*.bbl
+*.blg
+*.dvi
+*.glo
+*.glsdefs
+*.ist
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc
+*.bcf
