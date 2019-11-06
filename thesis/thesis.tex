@@ -3,8 +3,12 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{subcaption}
 \usepackage{float}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \graphicspath{{./img/}}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage[style=numeric,sorting=none,backend=biber, doi=false, isbn=false,eprint=false]{biblatex}
 \addbibresource{bibl.bib}
 \usepackage[english]{babel}
@@ -98,8 +102,8 @@ Y SYSTEMAS DE TELECOMUNICACIÓN}}\\
 \righthyphenmin=62
 \lefthyphenmin=62
 \justify
-\chapter*{Summary}
-	\input{section/summary}
+\chapter*{Abstract}
+	\input{section/abstract}
 \chapter*{Resumen}
 	\input{section/resumen}
 \chapter*{Acknowledgments}
@@ -110,10 +114,13 @@ Y SYSTEMAS DE TELECOMUNICACIÓN}}\\
 \chapter{Background}
 	\label{sec:background}
 	\input{section/background}
-\chapter{Implementation}
-	\label{sec:implementation}
-	\input{section/implementation}
-\chapter{Results}
+\chapter{K-Means Clustering Algorithm}
+	\label{sec:kmeans_algorithm}
+	\input{section/kmeans_algorithm}
+\chapter{Parallel Implementation}
+	\label{sec:parallel_implementation}
+	\input{section/parallel_implementation}
+\chapter{Experimental Results and Discussion}
 	\label{sec:results}
 	\input{section/results}
 \chapter{Conclusion}

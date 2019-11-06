@@ -1,5 +1,29 @@
-The evaluation of the project was performed in three steps - verification, validation, and benchmarking. 
+The evaluation of the project was performed in two steps - verification and validation. Furthermore, we have tested the proposed clustering algorithms on several well-known data sets, namely HELICoiD dataset.
 The following subsections describe each of the steps in details.
-    \section{Accuracy analysis}
-    \section{Timing analysis}
+    \section{Verification}
+The progress of this project has been supervised and verified by Eduardo Ju\'arez. The verification ensures that the project developed meets all the requirements specified by the supervisor.
+
+The proper operation was validated using a dataset of HS images provided by HELICoiD project database which is a set of six hyperspectral images with different sizes. In addition to this, a serial version of the algorithm was also provided, the clustering image obtained using this implementation has been compared with the one obtained using PREESM. In order to prove this, a fixed values of centroids are declared in the initialization function for both of the approaches. In other words, all the parallel versions have reached the same results than the serial one when the random initialization is removed.If the serial and the parallel versions have the same initialization, they execute the same number of iterations and generate the same outputs.
+
+In addition to the verifications mentioned above, this project has been tested for different architectures in order to analyse times and accuracy. This simply has been reached using different number of cores.
+
+    \section{Validation}
+    
+After the verification part and finishing the design, the identification of what is parallelizable and the software development process, the software was validated if it meets all the defined requirements and it is efficient or not in terms of time since the main aim of this project is to reach real time as much as possible.  
+Below it can be seen the list of all validation steps and their results.  
+    \subsection{Description of the tests} 
+In this section the accuracy as well as the execution times of the results obtained are tested both to evaluate them in each stage of the algorithm independently and in the whole system.
+
+
+Therefore, the procedure to be followed is to compare the execution time on an archictecrture
+
+
+we are going to follow so as to be able to compare the execution time on the multicore architecture with the one obtained executing the serial implementation. As was mentioned earlier, times are both analysed individually and globally. Hence, the speedup reached is a special parameter provided.
+
+In order to analyse and study these parameters, an image provided from the dataset has been selected. This image has 270 rows, 233 columns and 128 bands (that is, the image is composed by 128 bands and 62910 pixels per band).
+
+
+    \subsection{Performance Evaluation} 
+    \subsubsection{Accuracy analysis} 
+    \subsubsection{Timing analysis}
    

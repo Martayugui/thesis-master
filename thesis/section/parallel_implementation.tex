@@ -1,0 +1,54 @@
+This section describes how the parallelization of the algorithm has been implemented. Furthermore, bottlenecks are studied in detail since they are the ones which cause the greatest delays in the algorithm.
+
+    \section{Parallel K-Means implementation}
+    
+  The K-Means clustering algorithm has been designed and implemented using $\pi SDF$ dataflow model since it provides flexibility and analysability. The PiSDF dataflow model is used to  algorithms
+aims at providing coarse grain parallel descriptions of algorithms specifying precisely the data flowing between actors
+and offering a tradeoff between dynamic behavior and predictability.
+   So far, both the pseudo code and the $\pi SDF$ graph of the algorithm have been described, the next step is to start the analysis of what is parallelizable. In order to do it achievable, the execution times of each method is calculated and analysed since there are some of them that take most of the clustering algorithm execution time. The first approach will be explained below, and this implementation includes the heaviest operation  which is called compute distances, and if successful the processing time will be reduced dramatically.
+  
+   \begin{table}[h!]
+  \begin{center}
+    \begin{tabular}{l|c|r}
+      \textbf{Operation} & \textbf{Time(s)}\\
+      \hline 
+      Operation 1: Initialize centroids & 0.620\\
+      Operation 2: Compute error & 0.000023\\
+      Operation 3: Compute distance and find minimum & 13.682\\
+      Operation 4: Update centroids & 1.056\\
+    \end{tabular}
+\caption{Individual execution times}
+  \end{center}
+\label{tab:template}
+\end{table}
+
+
+Table \ref{tab:template} illustrates above-mentioned analysis.As shown, there is one operation that consumes more than the 91$\%$ of the global K-means processing time: the computation of the distances between every pixel and the centroids. Therefore, this computation will be the first to have been parallelized in order to achieve a great time reduction in the algorithm.
+
+   \subsection{Parallel versions of the K-means algorithm}
+\begin{enumerate}[label=\textbf{\arabic*})]
+   \item \textbf {Parallelization of the computation of the distances} \newline
+    The heaviest part of the code is the computation of the distances, which are calculated among pixels and centroids. The computation of the distance can be implemented in parallel since there is no data dependency with the evaluation of a particular pixel and the others.
+   
+   The first parallel version of the K-means algorithm is based on the parallelization of the distance computation. In this first approach each thread performs the computation of the distance between a particular pixel and the k centroids. This function has been first parallelized since this is one of computations that takes more time.
+
+ \item \textbf {Parallelization of the computation of the distances and find the index of the minimum distance} \newline
+   The computation of the distances is parallelized as well as the search for the minimum distance. Since the distances are stored in an $NxK array$, N threads are used for finding the index of the minimum distance. The for loop is performed by the i-threads which compute the operation of the minimum distance. 
+
+\item \textbf{Parallelization of the computation of the distances, find the index of the minimum distance and update centroids} \newline
+  The update centroids has been parallelized along with the computation of the distance and the search of the minimum distance. This task has been parallelized by assigning to each thread the computation of the update of the centroids. In other words, each thread is responsible for the update of the assigned centroids.
+\end{enumerate}   
+   
+
+     	\subsubsection{Bottlenecks}
+     	
+        \subsection{PREESM implementation}
+   Preesm is a dataflow language which aims at easing the description of parallel signal processing applications.
+   The aim of this section is to alter the original PiSDF dataflow model of the K-Means application in order to expose a parameterizable degree of data parallelism.
+   
+   \begin{center}
+   \textbf{Computate distance actor}
+    \end{center}
+   The previous analysis of the execution's times has illustrated that this operation consumes almost a 92$\%$ of the global execution time of the K-means algorithm. 
+    
+           After executing the workflow on the dual-core scenario, a PiSDF graph is generated. It can be generated the SRDAG with equal productions and consumptions rate from the .pi graph. As can be seen, the graph illustrates 2 duplicates of compute distance actor, each responsible for the computation of the spectral distance between each pixels and the k centroids. This graph is  displayed as follows:  

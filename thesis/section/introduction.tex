@@ -1,14 +1,26 @@
   \section{Motivation}
+  
+  Malignant brain tumours, with estimated incidences around 3.5 per 100,000 people, are among the most common and lethal cancers. In the majority of cases, the most certain method in term of diagnosis is to take some part of the tissue in order to have a histological and pathological analyses. The tissue is removed by an excisional biopsy (wide local incision) which involves surgical removal of a tumour and some normal tissue around it.
+    
+  Magnetic Resonance Imaging (MRI), Computed Tomographye (CT), Ultrasonography, Doppler scanning and Nuclear Imaging are techniques pretty useful for discovering possible injuries, however they are not always effective since certain patients have pacemakers or other implantable devices that prevent the use of them.
+  
+  	All those approaches have certain drawbacks, they may not provide real-time diagnosis response and they are aggressive and invasive for the patient. The resection of these tissues sometimes turn out to be very complicated because of their locations, they arise from very isolated areas, and they have blurred line and diffuse limits.
+    
     The present project has been developed within the context of HELICoiD (HypErspectraL Imaging Cancer Detection), which is an European project funded by the Seventh Framework Programme of the European Union and, especially, by the FET - Open (Future \& Emerging Technologies) initiative. Several institutions from different countries such as France, United Kingdom and The Netherlands have been involved in this European project as well. Furthermore, it includes two hospitals, three companies and four universities (Spain included).  This research, particularly, is a collaborative work with UPM (Spain) within research design group of Electronic and Microelectronic.
 
-The main aim of the HELICoiD European project is to provide to the surgeon a technique which informs accurately about healthy tissue and tumours in real time. This is all thanks to Hyperspectral images since traditional methods have low level in terms of sensitivity and the boundaries of the image are not clearly defined. In other words, HELICoiD aims at distinguishing between healthy tissue and tumours by extracting the spectral information of each pixel.It can be assumed that the spectral information is correlated with the chemical composition of a particular material. Therefore, each hyperspectral pixel has a spectral signature of a specific substance.
+The main aim of the HELICoiD European project is to provide to the surgeon a technique which informs accurately about healthy tissue and tumours in real time. This is all thanks to Hyperspectral images since traditional methods have low level in terms of sensitivity and precision, and indeed,the boundaries of the image are not clearly defined. In other words, HELICoiD aims at distinguishing between healthy tissue and tumours by extracting the spectral information of each pixel.Spectral information is correlated with the chemical composition of a particular material. Therefore, each hyperspectral pixel has a spectral signature of a specific substance.
+
 
 With regard to this line of research, the present work implements an unsupervised clustering method called K-Means on a parallel architecture in order to supply information in real time to surgeons. 
 
-In this regard, a dataflow language called $\pi SDF$ is used, in order to perform the parallelization of this algorithm. The $\pi SDF$ is a generalization of SDF MoC, is a syncronous dataflow model of computation. An application is modelled by directed graph of computational entities, called actors, that exchange data packets called data tokens, through a
+
+In order to approach real time classification during surgery,parallel implementation is necessary. This work evaluates the bottlenecks of the K-Means algorithm, those that take most of the time.Therefore, the heaviest parts of the code are analysed in detail, to consider which one is more suitable for approaching real time processing. 
+
+
+In this regard, a dataflow language called $\pi SDF$ is used, in order to perform the parallelization of this algorithm. The Parameterized and Interfaced Synchronous Dataflow ($\pi SDF$) is a generalization of SDF MoC, a synchronous dataflow model of computation. An application is modelled by directed graph of computational entities, called actors, that exchange data packets called data tokens, through a
 network of First-In First-Out queues (FIFOs)\cite{lee1987synchronous}
 
-The procedure is as follows; hyperspectral (HS) sensors attain hyperspectral cubes, and HS cubes are pre-processed in order to reduce dimensionality and noise. Afterwards, they are clustered employing K-Means, which defines different areas properly. After using this algorithm, an unsupervised segmentation map is generated. 
+The procedure is as follows; hyperspectral sensors  (HS)  attain hyperspectral cubes, and HS cubes are pre-processed in order to reduce dimensionality and noise. Afterwards, they are clustered employing K-Means clustering algorithm, which defines different areas properly. After using this algorithm, an unsupervised segmentation map is generated. 
 Meanwhile in parallel, the system executes a number of algorithms belonging to supervised classification. These algorithms are PCA (Principal Components Analysis), SVM (Support Vector Machine) and KNN (K-Nearest Neighbour). After performing these algorithms, tissues are displayed using different colours in order to represent the associated classes. 
 Applying the majority voting, the unsupervised segmentation map obtained from K-Means clustering algorithm as well as the classification map obtained from supervised classification, are merged. 
 
@@ -16,10 +28,22 @@ The implementation of this algorithm is carried out using a dataflow specificati
 
     \section{Objectives}
     
-As was mentioned earlier, the main objective of this project is to analyse a clustering algorithm called K-means in order to find possible parallelization methods and approach real time . The following points have been developed to achieve the global aim:
+As was mentioned earlier, the main objective of this project is to analyse a clustering algorithm called K-means in order to find possible parallelization methods and approach real time through a $\pi SDF$ dataflow. The following points have been developed to achieve the global aim:
+
  \begin{itemize}
+ 
+ \item Study in detail of hyperspectral images, its performance and processing methods that they allow, and as far as possible, approach real time.
+
+\item Study the unsupervised clustering algorithm in depth, especially, an optimized model for hyper-spectral images provided by Universidad de Las Palmas De Gran Canaria.
+
+ \item Perform the implementation of the sequential C algorithm of the K-Means in $\pi SDF$ dataflow model.
+  
 \item  Research how to efficiently parallelize an algorithm by considering the bottlenecks that generate delays on the execution of the algorithm. 
-\item Study in depth the unsupervised clustering algorithm, especially, an optimized model for hyper-spectral images provided by Universidad de Las Palmas De Gran Canaria.
+
 \item  Learn how to parallelize the chosen algorithm using a dataflow specification tool called PREESM. Ones of the great advantages of this dataflow used in PREESM is the flexibility, predictability and expressivity provided,since this semantic is based on interfaces that fix the number of tokens consumed/produced by a hierarchical vertex.
-\item Test the reached speedup by comparing it with the sequential implementation one.
+
+\item Test the reached speedup by comparing it with the sequential implementation one. The timing in the parallelized algorithm is supposed to be more efficient.
+
+
+\item Perform a deep analysis of the obtained results in terms of execution time, accuracy and performance. This study is both done individually (each bottleneck   independently) and globally (whole performance).
 \end{itemize}
